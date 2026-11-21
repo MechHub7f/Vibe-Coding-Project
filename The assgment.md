@@ -1,4 +1,4 @@
-the assigment:
+the assigment: https://inkfish.homework.quest/assignments/380
 Show Assignment
 Name: HW11 - Project Proposal
 Due: Monday, 2026-Nov-23 at 13:00; in 2 days
