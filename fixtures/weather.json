@@ -1,0 +1,51 @@
+{
+  "location": "Concord, NH",
+  "currentTempF": 60,
+  "currentCondition": "Partly cloudy",
+  "days": [
+    {
+      "date": "2026-11-23",
+      "maxF": 67,
+      "minF": 36,
+      "precipProb": 25
+    },
+    {
+      "date": "2026-11-24",
+      "maxF": 39,
+      "minF": 23,
+      "precipProb": 0
+    },
+    {
+      "date": "2026-11-25",
+      "maxF": 44,
+      "minF": 19,
+      "precipProb": 0
+    },
+    {
+      "date": "2026-11-26",
+      "maxF": 46,
+      "minF": 29,
+      "precipProb": 73
+    },
+    {
+      "date": "2026-11-27",
+      "maxF": 53,
+      "minF": 41,
+      "precipProb": 97
+    },
+    {
+      "date": "2026-11-28",
+      "maxF": 45,
+      "minF": 39,
+      "precipProb": 20
+    },
+    {
+      "date": "2026-11-29",
+      "maxF": 47,
+      "minF": 39,
+      "precipProb": 7
+    }
+  ],
+  "source": "Open-Meteo",
+  "retrievedAt": "2026-11-23T20:34:04.959Z"
+}
