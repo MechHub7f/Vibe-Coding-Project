@@ -110,7 +110,7 @@ components/   chart, sparkline, verdict badge
 lib/          data sources, prediction logic, helpers
 fixtures/     saved fixture data
 docs/         data-source and legal notes
-agenst/       reviewer-agent definitions and findings
+agents/       reviewer-agent definitions and findings
 ```
 
 ---

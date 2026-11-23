@@ -49,7 +49,7 @@ can be dropped into `lib/sources/stocks.ts` later.
 
 - `documentation.md` — human-friendly overview and usage.
 - `documentationai.md` — exhaustive technical reference for AI agents.
-- `agenst/` — the three reviewer-agent definitions and their v1 findings.
+- `agents/` — the three reviewer-agent definitions and their v1 findings.
 
 ## Scripts
 
@@ -73,7 +73,7 @@ lib/
   sources/           # eia.ts, weather.ts, stocks.ts
 fixtures/            # committed data (real EIA/Open-Meteo captures; synthetic stocks)
 docs/                # data-source + legal notes
-agenst/              # reviewer-agent definitions + v1 findings
+agents/              # reviewer-agent definitions + v1 findings
 ```
 
 ## Deploying to Oracle later

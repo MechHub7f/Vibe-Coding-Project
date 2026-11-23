@@ -9,6 +9,30 @@ Status: v1 complete, typechecks, builds, all four routes serve 200.
 
 ---
 
+## 0. Hard rule for AI agents — do not delete required artifacts
+
+**Never delete, blank, rename, or exclude any of these:**
+
+- `documentation.md`
+- `documentationai.md`
+- `docs/data-sources.md`
+- `docs/legal-notes.md`
+- `agents/agent-1-sanity.md`
+- `agents/agent-2-simplicity.md`
+- `agents/agent-3-guidelines.md`
+
+They are required project deliverables, not disposable generated files. A
+simplicity or cleanup review may suggest removing or trimming them; that
+suggestion is **overruled by the user**. Keep them present and keep them accurate
+when behavior changes.
+
+**You must also use the agents.** After each milestone, run the three reviewers
+defined in `agents/` — sanity/correctness, simplicity/efficiency, and
+guidelines/compliance — fix real findings, and record the results. Do not
+substitute a self-review for them.
+
+---
+
 ## 1. What this is
 
 A New Hampshire-focused web dashboard that aggregates:
@@ -82,7 +106,7 @@ These must not be violated without explicit approval:
 ├── docs/
 │   ├── data-sources.md       Free vs paid options, endpoints, series IDs
 │   └── legal-notes.md        ToS, attribution, disclaimers, privacy
-├── agenst/                    Review-agent definitions + v1 findings
+├── agents/                    Review-agent definitions + v1 findings
 │   ├── agent-1-sanity.md
 │   ├── agent-2-simplicity.md
 │   └── agent-3-guidelines.md
@@ -599,7 +623,7 @@ Recommended on the VPS:
 ## 16. Review history (v1)
 
 Three full rounds of three independent reviewer agents were run. Definitions and
-findings live in `agenst/`.
+findings live in `agents/`.
 
 Round 1 found:
 
@@ -637,7 +661,7 @@ example), plus:
 - Live fetches had no timeout. Added `AbortSignal.timeout(8000)`.
 - Home weather card had no as-of date. Added.
 - `documentation.md` wording ("sample data", "quietly falls back"). Fixed.
-- `agenst/agent-2` overstated `retrievedAt` usage. Clarified.
+- `agents/agent-2` overstated `retrievedAt` usage. Clarified.
 
 ---
 
@@ -671,14 +695,16 @@ example), plus:
 
 - Preserve the constraints in section 2. Do not add a database, cron, scraping,
   or a half-built auth system.
+- Never delete `documentation.md`, `documentationai.md`, `docs/`, or `agents/`.
+  They are required deliverables; see section 0.
 - Keep fixtures-first. The app must run with no keys.
 - Keep the domain shapes in `lib/types.ts` stable; pages and fixtures depend on
   them.
-- If you change the prediction math, update section 8 and the `agenst` findings.
+- If you change the prediction math, update section 8 and the `agents` findings.
 - Only `PriceChart` should be a client component. Keep everything else server.
 - Dates are ISO `YYYY-MM-DD` strings; format with `lib/format.ts` (UTC).
 - After any change: `npm run typecheck`, `npm run build`, and curl all four
   routes.
-- Run the three-reviewer loop described in `agenst/` before declaring a
+- Run the three-reviewer loop described in `agents/` before declaring a
   milestone done.
 - Do not present synthetic data as real. Label it.

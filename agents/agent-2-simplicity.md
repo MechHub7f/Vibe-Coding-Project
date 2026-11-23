@@ -73,7 +73,7 @@ installs, no mutating commands.
 - Code is in good shape; no required simplifications.
 - Recommended trimming the documentation set (~1,300 doc lines vs ~1,100 source
   lines). Declined: the user explicitly requested `documentationai.md`,
-  `documentation.md`, and detailed `agenst/` records. Only accuracy fixes were
+  `documentation.md`, and detailed `agents/` records. Only accuracy fixes were
   applied.
 - Optional code suggestions not adopted: collapsing the two home fuel cards,
   trimming the `Session` union, making `/stocks` static, flattening the
