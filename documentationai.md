@@ -96,8 +96,7 @@ These must not be violated without explicit approval:
 ├── documentationai.md        This file
 ├── Part1.md                  Pre-existing class assignment file (untouched)
 ├── The assgment.md           Pre-existing class assignment file (untouched)
-├── Nov.23.stuff tuck talked about  Pre-existing notes (untouched)
-└── README.md                 Project README (replaced)
+└── Nov.23.stuff tuck talked about  Pre-existing notes (untouched)
 ```
 
 No `next.config.ts` exists (removed deliberately; Next runs without it).
@@ -115,21 +114,21 @@ export const dynamic = "force-dynamic";
 This is intentional. In live mode the fetches use `cache: "no-store"`, which would
 opt out of static generation anyway; `force-dynamic` makes the behavior explicit
 and guarantees live mode is never frozen in a build-time snapshot. Build output
-confirms `/`, `/fuel`, `/weather`, `/stocks` are `ƒ (Dynamic)` and only
-`/_not-found` is static.
+confirms `/`, `/fuel`, `/weather`, `/stocks` are `ƒ (Dynamic)`; only the framework
+shells (`/_not-found`, `/_global-error`) are static.
 
 Request flow for a page:
 
 1. Page server component runs on each request.
-2. It calls `getFuelSnapshot()`, `getWeatherSnapshot()`, `getStocksSnapshot()`.
+2. The home page calls all three loaders with `Promise.all`; `/fuel` calls only
+   `getFuelSnapshot()`, `/weather` only `getWeatherSnapshot()`, and `/stocks`
+   only `getStocksSnapshot()` plus `getSession()`.
 3. `lib/cache.ts` returns a cached value if younger than 1 hour; otherwise the
    loader runs.
 4. Loader either returns a fixture (default) or fetches live data.
 5. Page passes data into server-rendered JSX.
 6. Only `components/PriceChart.tsx` is a client component (`"use client"`) and
    receives serializable `SeriesPoint[]`.
-
-The home page fetches all three sources with `Promise.all`.
 
 ---
 
@@ -351,10 +350,13 @@ wait    -> "Consider waiting"
 neutral -> "No strong signal"
 ```
 
-Detail text is generated from the verdict and percentages; for example "gasoline
-is 4.2% below its 4-week average and easing."
+Detail text is generated from the verdict and percentages; for example "regular
+gasoline is 4.2% below its 4-week average and easing."
 
 ### Current computed output (real fixture, 2026-11-16)
+
+These values reflect the v1 fixture captured 2026-11-23. Re-check them if the
+fixtures are regenerated.
 
 | Metric | Gasoline | Diesel |
 | --- | ---: | ---: |
@@ -445,8 +447,8 @@ export function getSession(): Session {
   - Diesel: price, verdict badge, detail.
   - Weather: current temp, condition, outlook length.
   - Stocks: SPY price, change % (2 decimals), "last close"; guards empty quotes.
-- Footnote: New England regional averages, data through the latest fuel date,
-  heuristics not guarantees.
+- Footnote: New England regional averages, data through the earliest of the two
+  fuels' latest dates, heuristics not guarantees.
 
 ### `app/fuel/page.tsx` (`/fuel`)
 
@@ -456,8 +458,8 @@ export function getSession(): Session {
   change (rose if rising, emerald if falling), detail text, 4 stats (4-week
   average, vs 4-week average, next week projected, confidence), optional
   year-ago line, and a Recharts `PriceChart` (240px).
-- `dataAsOf` uses the last gasoline point date (not `retrievedAt`), so "data
-  through Nov 16" is truthful.
+- `dataAsOf` uses the earliest of the two series' last point dates (not
+  `retrievedAt`), so "data through Nov 16" is true for both fuels.
 - Colors: gasoline `#0f766e`, diesel `#b45309`.
 
 ### `app/weather/page.tsx` (`/weather`)
@@ -596,7 +598,7 @@ Recommended on the VPS:
 
 ## 16. Review history (v1)
 
-Two full rounds of three independent reviewer agents were run. Definitions and
+Three full rounds of three independent reviewer agents were run. Definitions and
 findings live in `agenst/`.
 
 Round 1 found:
@@ -614,7 +616,8 @@ Round 1 found:
 - SHOULD-FIX: fuel "good time to buy" wording vs disclaimer. Reworded the
   subtitle and disclaimer; kept the user-requested signal.
 - NICE: unused `prevWeek`, unused `retrievedAt`, duplicate date parsing,
-  `.gitignore` env coverage, missing as-of dates, CC BY license link. All fixed.
+  `.gitignore` env coverage, missing as-of dates. All fixed. (The CC BY license
+  link was missed here and caught in round 2.)
 
 Round 2 confirmed the fixes and found:
 
@@ -623,6 +626,18 @@ Round 2 confirmed the fixes and found:
 - README overclaimed ISR/"committed" state. Fixed.
 - Minor wording/robustness items. Fixed (trend-based wording, `> 0` value filter,
   last-close date).
+
+Round 3 found no blockers or violations. It caught documentation
+inconsistencies (CC BY credited in the wrong round, "only `/_not-found` is
+static", request-flow overgeneralized, duplicate README entry, detail-text
+example), plus:
+
+- Fuel "data through" was derived from gasoline only. Fixed to use the earliest
+  of both series' last dates.
+- Live fetches had no timeout. Added `AbortSignal.timeout(8000)`.
+- Home weather card had no as-of date. Added.
+- `documentation.md` wording ("sample data", "quietly falls back"). Fixed.
+- `agenst/agent-2` overstated `retrievedAt` usage. Clarified.
 
 ---
 

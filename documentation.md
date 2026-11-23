@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. That's it — it runs on built-in sample data with no
+Open http://localhost:3000. That's it — it runs on built-in fixture data with no
 API keys.
 
 Optional live data:
@@ -97,8 +97,8 @@ pretend to have one.
   weather then fetch from the real APIs. Stocks stay as sample data because live
   quotes need a provider whose license allows public display.
 
-If a live fetch fails, the app quietly falls back to the saved data so a demo
-never breaks.
+If a live fetch fails, the app logs a warning and falls back to the saved data so
+a demo never breaks.
 
 ---
 
@@ -108,7 +108,7 @@ never breaks.
 app/          pages and layout
 components/   chart, sparkline, verdict badge
 lib/          data sources, prediction logic, helpers
-fixtures/     saved sample data
+fixtures/     saved fixture data
 docs/         data-source and legal notes
 agenst/       reviewer-agent definitions and findings
 ```

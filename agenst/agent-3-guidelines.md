@@ -84,6 +84,13 @@ Docs accuracy:
 - **OK-BUT-VERIFY — homepage is state-branded over regional data.** Every fuel
   surface labels New England; accepted.
 
+### Round 3
+
+- No violations or risks. All 20 checklist points passed or were OK-but-verify.
+- Documentation nits fixed: homepage weather as-of added; "only `/_not-found` is
+  static" corrected; fixture wording now distinguishes real captures from
+  synthetic stocks; `retrievedAt` usage clarified in the agent notes.
+
 ## Resolution status
 
 All VIOLATIONS are resolved. Standing rules for future work:

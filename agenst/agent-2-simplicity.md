@@ -48,7 +48,8 @@ installs, no mutating commands.
 - **Recharts was used for 36px sparklines.** Replaced with a server-only SVG
   `Sparkline`; `/stocks` now ships no chart JS.
 - **Unused `prevWeek` output field.** Removed.
-- **`retrievedAt` never displayed.** Now surfaced as as-of / last-close dates.
+- **`retrievedAt` never displayed.** Weather now shows it directly; fuel and
+  stocks show the last data-point date.
 - **Repeated card class string on the home page.** Extracted a `CARD` constant.
 - **Duplicated date parsing.** Consolidated into `lib/format.ts`.
 - **Empty `next.config.ts`.** Removed.
@@ -66,6 +67,17 @@ installs, no mutating commands.
     is possible but was judged not worth the abstraction.
   - `Session` type has unused v2 fields; kept intentionally as a seam.
   - A tiny `usd()` reuse in the chart axis; fixed.
+
+### Round 3
+
+- Code is in good shape; no required simplifications.
+- Recommended trimming the documentation set (~1,300 doc lines vs ~1,100 source
+  lines). Declined: the user explicitly requested `documentationai.md`,
+  `documentation.md`, and detailed `agenst/` records. Only accuracy fixes were
+  applied.
+- Optional code suggestions not adopted: collapsing the two home fuel cards,
+  trimming the `Session` union, making `/stocks` static, flattening the
+  `headline` ternary. The session seam is retained per the v2 requirement.
 
 ## Decisions / guardrails
 

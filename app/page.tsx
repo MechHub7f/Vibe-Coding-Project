@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { VerdictBadge } from "@/components/VerdictBadge";
-import { pct, shortDate, usd } from "@/lib/format";
+import { earliestDate, pct, shortDate, usd } from "@/lib/format";
 import { predictFuel } from "@/lib/predict";
 import { getFuelSnapshot } from "@/lib/sources/eia";
 import { getStocksSnapshot } from "@/lib/sources/stocks";
@@ -22,6 +22,12 @@ export default async function HomePage() {
   const diesel = predictFuel(fuel.diesel);
   const topStock = stocks.quotes[0];
   const stockUp = topStock ? topStock.changePct >= 0 : false;
+  const fuelAsOf = shortDate(
+    earliestDate(
+      [fuel.gasoline.points.at(-1)?.date, fuel.diesel.points.at(-1)?.date],
+      fuel.retrievedAt,
+    ),
+  );
 
   return (
     <div className="space-y-8">
@@ -70,6 +76,9 @@ export default async function HomePage() {
           <p className="mt-1 text-xs text-slate-500">
             {weather.currentCondition} · {weather.days.length}-day outlook
           </p>
+          <p className="mt-1 text-xs text-slate-400">
+            as of {shortDate(weather.retrievedAt)}
+          </p>
         </Link>
 
         <Link href="/stocks" className={CARD}>
@@ -98,9 +107,7 @@ export default async function HomePage() {
 
       <p className="text-xs text-slate-500">
         Pump fuel prices are New England (PADD 1A) regional weekly averages, data
-        through{" "}
-        {shortDate(fuel.gasoline.points.at(-1)?.date ?? fuel.retrievedAt)}.
-        Signals are short-term heuristics, not guarantees.
+        through {fuelAsOf}. Signals are short-term heuristics, not guarantees.
       </p>
     </div>
   );

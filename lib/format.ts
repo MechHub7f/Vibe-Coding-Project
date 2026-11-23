@@ -35,3 +35,12 @@ export function round(value: number, digits = 2): number {
   const factor = 10 ** digits;
   return Math.round(value * factor) / factor;
 }
+
+/** Earliest of the given ISO dates, falling back when none are present. */
+export function earliestDate(
+  dates: (string | undefined)[],
+  fallback: string,
+): string {
+  const present = dates.filter((date): date is string => Boolean(date)).sort();
+  return present[0] ?? fallback;
+}

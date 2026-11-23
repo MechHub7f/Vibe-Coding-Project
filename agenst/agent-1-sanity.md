@@ -66,6 +66,18 @@ it must not edit files, install packages, or run mutating commands.
 - Noted index-based `n-53`/`n-2` is fragile only if a week goes missing; accepted
   as a documented limitation for v1.
 
+### Round 3
+
+- No blockers. Independently reproduced every number in `documentationai.md` and
+  confirmed all 60 fuel points and the seven weather days against the live APIs.
+- Confirmed git state: `HEAD` is `d923511` and the tree is clean.
+- Flagged documentation inconsistencies (CC BY credited in the wrong round, "only
+  `/_not-found` is static", request-flow overgeneralization, duplicate README
+  entry, detail-text example) — all corrected.
+- Flagged that the page-level "data through" date used gasoline only; now uses
+  the earliest of both series.
+- Flagged missing fetch timeouts; added `AbortSignal.timeout(8000)`.
+
 ## Resolution status
 
 All BLOCKER and SHOULD-FIX items are resolved in v1. The residual items are

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PriceChart } from "@/components/PriceChart";
 import { VerdictBadge } from "@/components/VerdictBadge";
-import { pct, shortDate, usd } from "@/lib/format";
+import { earliestDate, pct, shortDate, usd } from "@/lib/format";
 import { predictFuel } from "@/lib/predict";
 import { getFuelSnapshot } from "@/lib/sources/eia";
 import type { FuelPrediction, FuelSeries } from "@/lib/types";
@@ -94,7 +94,10 @@ export default async function FuelPage() {
   const gasoline = predictFuel(fuel.gasoline);
   const diesel = predictFuel(fuel.diesel);
   const dataAsOf = shortDate(
-    fuel.gasoline.points.at(-1)?.date ?? fuel.retrievedAt,
+    earliestDate(
+      [fuel.gasoline.points.at(-1)?.date, fuel.diesel.points.at(-1)?.date],
+      fuel.retrievedAt,
+    ),
   );
 
   return (

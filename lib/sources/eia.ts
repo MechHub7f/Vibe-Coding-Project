@@ -31,7 +31,10 @@ async function fetchSeries(seriesId: string): Promise<SeriesPoint[]> {
   url.searchParams.set("sort[0][direction]", "desc");
   url.searchParams.set("length", String(MAX_POINTS));
 
-  const res = await fetch(url, { cache: "no-store" });
+  const res = await fetch(url, {
+    cache: "no-store",
+    signal: AbortSignal.timeout(8000),
+  });
   if (!res.ok) {
     throw new Error(`EIA request failed (${res.status}) for ${seriesId}`);
   }

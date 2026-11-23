@@ -60,7 +60,10 @@ async function fetchForecast(): Promise<WeatherSnapshot> {
   url.searchParams.set("timezone", "America/New_York");
   url.searchParams.set("forecast_days", "7");
 
-  const res = await fetch(url, { cache: "no-store" });
+  const res = await fetch(url, {
+    cache: "no-store",
+    signal: AbortSignal.timeout(8000),
+  });
   if (!res.ok) {
     throw new Error(`Open-Meteo request failed (${res.status})`);
   }
